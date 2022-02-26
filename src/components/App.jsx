@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ToDoItem from "./ToDoitem";
 
 function App() {
   var [inputname, setinputname] = useState("");
@@ -16,6 +17,14 @@ function App() {
     setinputname(""); //clearing the input value as soon as button is clicked
   }
 
+  function deleteitem(id) {
+    setitemlist((prevItems) => {
+      return prevItems.filter((item, index) => {
+        return index !== id; //returning all the items except the id that is selected
+      });
+    });
+  }
+
   return (
     <div className="container">
       <div className="heading">
@@ -31,10 +40,14 @@ function App() {
 
       <div>
         <ul>
-          {/* <li>A Item </li> */}
-          {itemlist.map((element) => {
-            return <li>{element}</li>;
-          })}
+          {itemlist.map((todoItem, indexabc) => (
+            <ToDoItem
+              key={indexabc}
+              id={indexabc}
+              text={todoItem}
+              onChecked={deleteitem}
+            />
+          ))}
         </ul>
       </div>
     </div>
